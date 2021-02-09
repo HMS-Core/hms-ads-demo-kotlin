@@ -1,5 +1,5 @@
 # HMS Ads Kit Demo for Kotlin
-
+English | [中文](https://github.com/HMS-Core/hms-ads-demo-kotlin/blob/master/README_ZH.md)
 ## Table of Contents
 
  * [Introduction](#introduction)
@@ -23,35 +23,35 @@ The following classes in the demo are used for loading and displaying ads and co
 
 1. BannerActivity.kt
 Loads and displays banner ads.
-Code location: HuaweiAdsSdk_Demo\app\src\main\java\com\huawei\hms\ads\sdk\BannerActivity.kt
+<br>Code location: HuaweiAdsSdk_Demo\app\src\main\java\com\huawei\hms\ads\sdk\BannerActivity.kt</br>
     
 2. NativeActivity.kt
 Loads and displays native ads.
-Code location: HuaweiAdsSdk_Demo\app\src\main\java\com\huawei\hms\ads\sdk\NativeActivity.kt
+<br>Code location: HuaweiAdsSdk_Demo\app\src\main\java\com\huawei\hms\ads\sdk\NativeActivity.kt</br>
     
 3. RewardActivity.kt
 Loads and displays rewarded ads.
-Code location: HuaweiAdsSdk_Demo\app\src\main\java\com\huawei\hms\ads\sdk\RewardActivity.kt
+<br>Code location: HuaweiAdsSdk_Demo\app\src\main\java\com\huawei\hms\ads\sdk\RewardActivity.kt</br>
 	
 4. InterstitialActivity.kt
 Loads and displays interstitial ads.
-Code location: HuaweiAdsSdk_Demo\app\src\main\java\com\huawei\hms\ads\sdk\InterstitialActivity.kt
+<br>Code location: HuaweiAdsSdk_Demo\app\src\main\java\com\huawei\hms\ads\sdk\InterstitialActivity.kt</br>
 	
 5. SplashActivity.kt
 Loads and displays splash ads.
-Code location: HuaweiAdsSdk_Demo\app\src\main\java\com\huawei\hms\ads\sdk\SplashActivity.kt
+<br>Code location: HuaweiAdsSdk_Demo\app\src\main\java\com\huawei\hms\ads\sdk\SplashActivity.kt</br>
 	
 6. ConsentActivity.kt
 Collects user consent.
-Code location: HuaweiAdsSdk_Demo\app\src\main\java\com\huawei\hms\ads\sdk\ConsentActivity.kt
+<br>Code location: HuaweiAdsSdk_Demo\app\src\main\java\com\huawei\hms\ads\sdk\ConsentActivity.kt</br>
     
 7. ProtocolActivity.kt
 Collects user consent on privacy terms.
-Code location：HuaweiAdsSdk_Demo\app\src\main\java\com\huawei\hms\ads\sdk\ProtocolActivity.kt
+<br>Code location：HuaweiAdsSdk_Demo\app\src\main\java\com\huawei\hms\ads\sdk\ProtocolActivity.kt</br>
 
 ## Question or issues
 If you want to evaluate more about HMS Core,
-[r/HMSCore on Reddit](https://www.reddit.com/r/HuaweiDevelopers/) is for you to keep up with latest news about HMS Core, and to exchange insights with other developers.
+[HMSCore on Reddit](https://www.reddit.com/r/HuaweiDevelopers/) is for you to keep up with latest news about HMS Core, and to exchange insights with other developers.
 
 If you have questions about how to use HMS samples, try the following options:
 - [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services) is the best place for any programming questions. Be sure to tag your question with 
