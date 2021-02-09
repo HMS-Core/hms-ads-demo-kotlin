@@ -1,5 +1,5 @@
-# HMS Ads Kit Demo for Kotlin
-中文 | [English](https://github.com/HMS-Core/hms-ads-demo-kotlin/edit/master/README.md)
+# 华为广告服务Kotlin示例代码
+中文 | [English](https://github.com/HMS-Core/hms-ads-demo-kotlin)
 ## 目录
 
  * [简介](#简介)
