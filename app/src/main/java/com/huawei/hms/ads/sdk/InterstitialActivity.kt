@@ -95,7 +95,7 @@ class InterstitialActivity : BaseActivity() {
     private fun showInterstitial() {
         // Display an interstitial ad.
         if (interstitialAd != null && interstitialAd!!.isLoaded) {
-            interstitialAd!!.show()
+            interstitialAd!!.show(this)
         } else {
             Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show()
         }
