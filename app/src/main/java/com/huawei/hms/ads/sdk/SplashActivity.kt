@@ -194,7 +194,7 @@ class SplashActivity : Activity() {
         private val TAG = SplashActivity::class.java.simpleName
 
         // Ad display timeout interval, in milliseconds.
-        private const val AD_TIMEOUT = 5000
+        private const val AD_TIMEOUT = 10000
 
         // Ad display timeout message flag.
         private const val MSG_AD_TIMEOUT = 1001
