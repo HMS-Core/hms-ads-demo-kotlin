@@ -25,7 +25,6 @@ import com.huawei.hms.ads.AdListener
 import com.huawei.hms.ads.AdParam
 import com.huawei.hms.ads.HwAds
 import com.huawei.hms.ads.InterstitialAd
-import com.huawei.hms.ads.sdk.InterstitialActivity
 
 /**
  * Activity for displaying an interstitial ad.
@@ -49,20 +48,19 @@ class InterstitialActivity : BaseActivity() {
     private val adListener: AdListener = object : AdListener() {
         override fun onAdLoaded() {
             super.onAdLoaded()
-            Toast.makeText(this@InterstitialActivity, "Ad loaded", Toast.LENGTH_SHORT).show()
+            showToast("Ad loaded")
             // Display an interstitial ad.
             showInterstitial()
         }
 
         override fun onAdFailed(errorCode: Int) {
-            Toast.makeText(this@InterstitialActivity, "Ad load failed with error code: $errorCode",
-                    Toast.LENGTH_SHORT).show()
+            showToast("Ad load failed with error code: $errorCode")
             Log.d(TAG, "Ad load failed with error code: $errorCode")
         }
 
         override fun onAdClosed() {
             super.onAdClosed()
-            Toast.makeText(this@InterstitialActivity, "Ad closed", Toast.LENGTH_SHORT).show()
+            showToast("Ad closed")
             Log.d(TAG, "onAdClosed")
         }
 
@@ -97,7 +95,14 @@ class InterstitialActivity : BaseActivity() {
         if (interstitialAd != null && interstitialAd!!.isLoaded) {
             interstitialAd!!.show(this)
         } else {
-            Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show()
+            showToast("Ad did not load")
+        }
+    }
+
+
+    private fun showToast(text: String) {
+        runOnUiThread {
+            Toast.makeText(this@InterstitialActivity, text, Toast.LENGTH_SHORT).show()
         }
     }
 

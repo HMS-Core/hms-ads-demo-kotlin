@@ -25,7 +25,6 @@ import com.huawei.hms.ads.reward.Reward
 import com.huawei.hms.ads.reward.RewardAd
 import com.huawei.hms.ads.reward.RewardAdLoadListener
 import com.huawei.hms.ads.reward.RewardAdStatusListener
-import com.huawei.hms.ads.sdk.RewardActivity
 import java.util.*
 
 /**
@@ -68,14 +67,11 @@ class RewardActivity : BaseActivity() {
         }
         val rewardAdLoadListener: RewardAdLoadListener = object : RewardAdLoadListener() {
             override fun onRewardAdFailedToLoad(errorCode: Int) {
-                Toast
-                        .makeText(this@RewardActivity, "onRewardAdFailedToLoad errorCode is :$errorCode",
-                                Toast.LENGTH_SHORT)
-                        .show()
+                showToast("onRewardAdFailedToLoad errorCode is :$errorCode");
             }
 
             override fun onRewardedLoaded() {
-                Toast.makeText(this@RewardActivity, "onRewardedLoaded", Toast.LENGTH_SHORT).show()
+                showToast("onRewardedLoaded")
             }
         }
         rewardedAd!!.loadAd(AdParam.Builder().build(), rewardAdLoadListener)
@@ -88,18 +84,16 @@ class RewardActivity : BaseActivity() {
         if (rewardedAd!!.isLoaded) {
             rewardedAd!!.show(this@RewardActivity, object : RewardAdStatusListener() {
                 override fun onRewardAdClosed() {
+                    showToast("onRewardAdClosed")
                     loadRewardAd()
                 }
 
                 override fun onRewardAdFailedToShow(errorCode: Int) {
-                    Toast
-                            .makeText(this@RewardActivity, "onRewardAdFailedToShow errorCode is :$errorCode",
-                                    Toast.LENGTH_SHORT)
-                            .show()
+                    showToast("onRewardAdFailedToShow errorCode is :$errorCode")
                 }
 
                 override fun onRewardAdOpened() {
-                    Toast.makeText(this@RewardActivity, "onRewardAdOpened", Toast.LENGTH_SHORT).show()
+                    showToast("onRewardAdOpened")
                 }
 
                 override fun onRewarded(reward: Reward) {
@@ -107,15 +101,18 @@ class RewardActivity : BaseActivity() {
                     // takes effect on the server. If no reward information is configured, grant a reward based on the
                     // actual scenario.
                     val addScore = if (reward.amount == 0) defaultScore else reward.amount
-                    Toast
-                            .makeText(this@RewardActivity, "Watch video show finished , add $addScore scores",
-                                    Toast.LENGTH_SHORT)
-                            .show()
+                    showToast("Watch video show finished , add $addScore scores")
                     score += addScore
                     setScore(score)
                     loadRewardAd()
                 }
             })
+        }
+    }
+
+    private fun showToast(text: String) {
+        runOnUiThread {
+            Toast.makeText(this@RewardActivity, text, Toast.LENGTH_SHORT).show()
         }
     }
 
