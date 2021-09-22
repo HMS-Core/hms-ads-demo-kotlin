@@ -16,45 +16,42 @@
 package com.huawei.hms.ads.sdk
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import com.huawei.hms.ads.AdListener
 import com.huawei.hms.ads.AdParam
-import com.huawei.hms.ads.VideoOperator.VideoLifecycleListener
+import com.huawei.hms.ads.VideoConfiguration
 import com.huawei.hms.ads.nativead.*
 
 class NativeActivity : BaseActivity() {
-    private var small: RadioButton? = null
-    private var video: RadioButton? = null
-    private var loadBtn: Button? = null
-    private var adScrollView: ScrollView? = null
-    private var layoutId = 0
+
+    private lateinit var bigImage: RadioButton
+    private lateinit var threeSmall: RadioButton
+    private lateinit var smallImage: RadioButton
+    private lateinit var videoWithText: RadioButton
+    private lateinit var appDownloadBtn: RadioButton
+    private lateinit var loadBtn: Button
+    private lateinit var adScrollView: ScrollView
     private var globalNativeAd: NativeAd? = null
-    private val videoLifecycleListener: VideoLifecycleListener = object : VideoLifecycleListener() {
-        override fun onVideoStart() {
-            updateStatus(getString(R.string.status_play_start), false)
-        }
-
-        override fun onVideoPlay() {
-            updateStatus(getString(R.string.status_playing), false)
-        }
-
-        override fun onVideoEnd() {
-            // If there is a video, load a new native ad only after video playback is complete.
-            updateStatus(getString(R.string.status_play_end), true)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = getString(R.string.native_ad)
         setContentView(R.layout.activity_native)
-        small = findViewById(R.id.radio_button_small)
-        video = findViewById(R.id.radio_button_video)
+
+        bigImage = findViewById(R.id.radio_button_large)
+        threeSmall = findViewById(R.id.radio_button_three_small)
+        smallImage = findViewById(R.id.radio_button_small)
+        videoWithText = findViewById(R.id.radio_button_video)
+        appDownloadBtn = findViewById(R.id.radio_button_app_download_button)
+
         loadBtn = findViewById(R.id.btn_load)
         adScrollView = findViewById(R.id.scroll_view_ad)
-        loadBtn!!.setOnClickListener(View.OnClickListener { loadAd(adId) })
-        loadAd(adId)
+
+        loadBtn.setOnClickListener(View.OnClickListener { loadAd(getAdId()) })
+
+        loadAd(getAdId())
     }
 
     /**
@@ -62,20 +59,27 @@ class NativeActivity : BaseActivity() {
      *
      * @return ad slot ID
      */
-    private val adId: String
-        private get() {
-            val adId: String
-            layoutId = R.layout.native_video_template
-            if (small!!.isChecked) {
-                adId = getString(R.string.ad_id_native_small)
-                layoutId = R.layout.native_small_template
-            } else if (video!!.isChecked) {
-                adId = getString(R.string.ad_id_native_video)
-            } else {
+    private fun getAdId(): String {
+        var adId = getString(R.string.ad_id_native)
+        when {
+            bigImage!!.isChecked -> {
                 adId = getString(R.string.ad_id_native)
             }
-            return adId
+            smallImage!!.isChecked -> {
+                adId = getString(R.string.ad_id_native_small)
+            }
+            threeSmall!!.isChecked -> {
+                adId = getString(R.string.ad_id_native_three)
+            }
+            videoWithText!!.isChecked -> {
+                adId = getString(R.string.ad_id_native_video)
+            }
+            appDownloadBtn!!.isChecked -> {
+                adId = getString(R.string.ad_id_native_video)
+            }
         }
+        return adId
+    }
 
     /**
      * Load a native ad.
@@ -91,14 +95,23 @@ class NativeActivity : BaseActivity() {
             // Display native ad.
             showNativeAd(nativeAd)
         }.setAdListener(object : AdListener() {
+            override fun onAdLoaded() {
+                updateStatus(getString(R.string.status_load_ad_finish), true)
+            }
+
             override fun onAdFailed(errorCode: Int) {
                 // Call this method when an ad fails to be loaded.
                 updateStatus(getString(R.string.status_load_ad_fail) + errorCode, true)
             }
         })
+        val videoConfiguration = VideoConfiguration.Builder()
+            .setStartMuted(true)
+            .build()
         val adConfiguration = NativeAdConfiguration.Builder()
-                .setChoicesPosition(NativeAdConfiguration.ChoicesPosition.BOTTOM_RIGHT) // Set custom attributes.
-                .build()
+            .setChoicesPosition(NativeAdConfiguration.ChoicesPosition.BOTTOM_RIGHT) // Set custom attributes.
+            .setVideoConfiguration(videoConfiguration)
+            .setRequestMultiImages(true)
+            .build()
         val nativeAdLoader = builder.setNativeAdOptions(adConfiguration).build()
         nativeAdLoader.loadAd(AdParam.Builder().build())
         updateStatus(getString(R.string.status_ad_loading), false)
@@ -115,58 +128,46 @@ class NativeActivity : BaseActivity() {
             globalNativeAd!!.destroy()
         }
         globalNativeAd = nativeAd
+        val nativeView: View = createNativeView(nativeAd, adScrollView)!!
+        if (nativeView != null) {
+            globalNativeAd!!.setDislikeAdListener { // Call this method when an ad is closed.
+                updateStatus(getString(R.string.ad_is_closed), true)
+                adScrollView.removeView(nativeView)
+            }
 
-        // Obtain NativeView.
-        val nativeView = layoutInflater.inflate(layoutId, null) as NativeView
-
-        // Register and populate a native ad material view.
-        initNativeAdView(globalNativeAd, nativeView)
-        globalNativeAd!!.setDislikeAdListener { // Call this method when an ad is closed.
-            updateStatus(getString(R.string.ad_is_closed), true)
-            adScrollView!!.removeView(nativeView)
+            // Add NativeView to the app UI.
+            adScrollView.removeAllViews()
+            adScrollView.addView(nativeView)
         }
-
-        // Add NativeView to the app UI.
-        adScrollView!!.removeAllViews()
-        adScrollView!!.addView(nativeView)
     }
 
     /**
-     * Register and populate a native ad material view.
+     * Create a nativeView by creativeType and fill in ad material.
      *
      * @param nativeAd   native ad object that contains ad materials.
-     * @param nativeView native ad view to be populated into.
+     * @param parentView parent view of nativeView.
      */
-    private fun initNativeAdView(nativeAd: NativeAd?, nativeView: NativeView) {
-        // Register a native ad material view.
-        nativeView.titleView = nativeView.findViewById(R.id.ad_title)
-        nativeView.mediaView = nativeView.findViewById<View>(R.id.ad_media) as MediaView
-        nativeView.adSourceView = nativeView.findViewById(R.id.ad_source)
-        nativeView.callToActionView = nativeView.findViewById(R.id.ad_call_to_action)
-
-        // Populate a native ad material view.
-        (nativeView.titleView as TextView).text = nativeAd!!.title
-        nativeView.mediaView.setMediaContent(nativeAd.mediaContent)
-        if (null != nativeAd.adSource) {
-            (nativeView.adSourceView as TextView).text = nativeAd.adSource
+    private fun createNativeView(nativeAd: NativeAd, parentView: ViewGroup): View? {
+        val createType = nativeAd.creativeType
+        Log.i(TAG, "Native ad createType is $createType")
+        if (createType == 2 || createType == 102) {
+            // Large image
+            return NativeViewFactory.createImageOnlyAdView(nativeAd, parentView)
+        } else if (createType == 3 || createType == 6) {
+            // Large image with text or video with text
+            return NativeViewFactory.createMediumAdView(nativeAd, parentView)
+        } else if (createType == 103 || createType == 106) {
+            // Large image with text or Video with text, using AppDownloadButton template.
+            return NativeViewFactory.createAppDownloadButtonAdView(nativeAd, parentView)
+        } else if (createType == 7 || createType == 107) {
+            // Small image with text-
+            return NativeViewFactory.createSmallImageAdView(nativeAd, parentView)
+        } else if (createType == 8 || createType == 108) {
+            // Three small images with text
+            return NativeViewFactory.createThreeImagesAdView(nativeAd, parentView)
+        } else {
+            return null
         }
-        nativeView.adSourceView.visibility = if (null != nativeAd.adSource) View.VISIBLE else View.INVISIBLE
-        if (null != nativeAd.callToAction) {
-            (nativeView.callToActionView as Button).text = nativeAd.callToAction
-        }
-        nativeView.callToActionView.visibility = if (null != nativeAd.callToAction) View.VISIBLE else View.INVISIBLE
-
-        // Obtain a video controller.
-        val videoOperator = nativeAd.videoOperator
-
-        // Check whether a native ad contains video materials.
-        if (videoOperator.hasVideo()) {
-            // Add a video lifecycle event listener.
-            videoOperator.videoLifecycleListener = videoLifecycleListener
-        }
-
-        // Register a native ad object.
-        nativeView.setNativeAd(nativeAd)
     }
 
     /**
@@ -179,7 +180,7 @@ class NativeActivity : BaseActivity() {
         if (null != text) {
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
         }
-        loadBtn!!.isEnabled = loadBtnEnabled
+        loadBtn.isEnabled = loadBtnEnabled
     }
 
     override fun onDestroy() {
@@ -187,5 +188,9 @@ class NativeActivity : BaseActivity() {
             globalNativeAd!!.destroy()
         }
         super.onDestroy()
+    }
+
+    companion object{
+        private val TAG = NativeActivity::class.java.simpleName
     }
 }
