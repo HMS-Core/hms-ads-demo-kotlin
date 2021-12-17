@@ -59,7 +59,7 @@ class BannerActivity : BaseActivity() {
         bannerView!!.setBackgroundColor(color)
         adFrameLayout!!.addView(bannerView)
         bannerView!!.adListener = adListener
-        bannerView!!.setBannerRefresh(30)
+        bannerView!!.setBannerRefresh(60)
         bannerView!!.loadAd(AdParam.Builder().build())
     }
 
