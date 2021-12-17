@@ -161,6 +161,6 @@ class BannerActivity : BaseActivity() {
     }
 
     companion object {
-        private const val REFRESH_TIME = 30
+        private const val REFRESH_TIME = 60
     }
 }
