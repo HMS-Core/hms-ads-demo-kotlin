@@ -91,13 +91,15 @@ class SplashActivity : Activity() {
 
     private fun loadAd() {
         Log.i(TAG, "Start to load ad")
-        val orientation = screenOrientation
         val adParam = AdParam.Builder().build()
         splashView = findViewById(R.id.splash_ad_view)
         splashView!!.setAdDisplayListener(adDisplayListener)
+
         val slotId: String
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED)
+        val orientation = screenOrientation
         // Set a default app launch image.
-        slotId = if (orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+        if (orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
             splashView!!.setSloganResId(R.drawable.default_slogan)
             getString(R.string.ad_id_splash)
         } else {
