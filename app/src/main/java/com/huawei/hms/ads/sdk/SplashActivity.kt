@@ -99,7 +99,7 @@ class SplashActivity : Activity() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED)
         val orientation = screenOrientation
         // Set a default app launch image.
-        if (orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+        slotId = if (orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
             splashView!!.setSloganResId(R.drawable.default_slogan)
             getString(R.string.ad_id_splash)
         } else {
