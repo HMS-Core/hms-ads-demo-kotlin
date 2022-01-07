@@ -96,9 +96,10 @@ class SplashActivity : Activity() {
         splashView!!.setAdDisplayListener(adDisplayListener)
 
         val slotId: String
+        // Lock the screen orientation on the device. Your app will automatically adapt to the screen orientation.
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED)
         val orientation = screenOrientation
-        // Set a default app launch image.
+        // Set the default slogan and the splash ad unit ID based on the screen orientation on the device.
         slotId = if (orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
             splashView!!.setSloganResId(R.drawable.default_slogan)
             getString(R.string.ad_id_splash)
