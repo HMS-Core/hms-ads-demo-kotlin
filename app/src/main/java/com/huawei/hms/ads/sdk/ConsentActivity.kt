@@ -64,7 +64,7 @@ class ConsentActivity : BaseActivity(), ConsentDialogCallback {
         // After DEBUG_NEED_CONSENT is set, ensure that the consent is required even if a device is not located in a specified area.
         consentInfo.setDebugNeedConsent(DebugNeedConsent.DEBUG_NEED_CONSENT)
         consentInfo.requestConsentUpdate(object : ConsentUpdateListener {
-            override fun onSuccess(consentStatus: ConsentStatus, isNeedConsent: Boolean, adProviders: List<AdProvider>) {
+            override fun onSuccess(consentStatus: ConsentStatus, isNeedConsent: Boolean, adProviders: List<AdProvider>?) {
                 Log.d(TAG, "ConsentStatus: $consentStatus, isNeedConsent: $isNeedConsent")
 
                 // The parameter indicating whether the consent is required is returned.
@@ -72,7 +72,7 @@ class ConsentActivity : BaseActivity(), ConsentDialogCallback {
                     // If ConsentStatus is set to UNKNOWN, re-collect user consent.
                     if (consentStatus == ConsentStatus.UNKNOWN) {
                         mAdProviders.clear()
-                        mAdProviders.addAll(adProviders)
+                        adProviders?.let { mAdProviders.addAll(it) }
                         showConsentDialog()
                     } else {
                         // If ConsentStatus is set to PERSONALIZED or NON_PERSONALIZED, no dialog box is displayed to collect user consent.
