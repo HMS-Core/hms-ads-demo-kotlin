@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity() {
         consentInfo.requestConsentUpdate(object : ConsentUpdateListener {
             override fun onSuccess(consentStatus: ConsentStatus?, isNeedConsent: Boolean, adProviders: List<AdProvider>?) {
                 Log.i(TAG, "ConsentStatus: $consentStatus, isNeedConsent: $isNeedConsent")
-                if (isNeedConsent) {
+                if (isNeedConsent && consentStatus == ConsentStatus.UNKNOWN) {
                     if (adProviders != null && adProviders.isNotEmpty()) {
                         adProviderList.addAll(adProviders)
                     }
