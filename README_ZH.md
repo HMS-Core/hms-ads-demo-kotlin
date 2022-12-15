@@ -1,4 +1,4 @@
-# 华为广告服务Kotlin示例代码
+# 鲸鸿动能广告服务Kotlin示例代码
 中文 | [English](https://github.com/HMS-Core/hms-ads-demo-kotlin)
 ## 目录
 
@@ -9,7 +9,7 @@
  * [授权许可](#授权许可)
   
 ## 简介
-华为广告服务（HUAWEI Ads Kit）Kotlin示例代码向您介绍如何将HUAWEI Ads SDK集成到安卓应用中，实现广告展示。
+鲸鸿动能广告服务Kotlin示例代码向您介绍如何将鲸鸿动能SDK集成到安卓应用中，实现广告展示。
 
 ## 安装
 在华为手机上安装该示例代码项目。
@@ -19,7 +19,8 @@
 在华为手机上安装HMS Core (APK) 4.0.0及以上版本。
 	
 ## 示例代码
-华为广告服务Kotlin示例代码集成了HMS Core Ads SDK，为您提供横幅广告、原生广告、激励广告、插屏广告、开屏广告和贴片广告的展示页面。本示例代码包括以下六个文件，便于您进行广告加载、展示和用户意见征集：
+鲸鸿动能广告服务Kotlin示例代码集成了HMS Core Ads SDK，为您提供横幅广告、原生广告、激励广告、插屏广告、开屏广告和贴片广告的展示页面。
+本示例代码包括以下六个文件，便于您进行广告加载、展示和用户意见征集：
 
 1. BannerActivity.kt
 用于加载、展示横幅广告。
@@ -59,4 +60,4 @@
 如果您在尝试示例代码中遇到问题，请向仓库提交[issue](https://github.com/HMS-Core/hms-ads-demo-kotlin/issues)，也欢迎您提交[Pull Request](https://github.com/HMS-Core/hms-ads-demo-kotlin/pulls)。
 
 ##  授权许可
-华为广告服务Java示例代码经过 [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0)授权许可。
+鲸鸿动能广告服务Kotlin示例代码经过 [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0)授权许可。
