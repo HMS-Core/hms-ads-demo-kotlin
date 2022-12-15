@@ -1,4 +1,4 @@
-# HMS Ads Kit Demo for Kotlin
+# Petal Ads Demo for Kotlin
 English | [中文](https://github.com/HMS-Core/hms-ads-demo-kotlin/blob/master/README_ZH.md)
 ## Table of Contents
 
@@ -9,17 +9,18 @@ English | [中文](https://github.com/HMS-Core/hms-ads-demo-kotlin/blob/master/R
  * [License](#license)
   
 ## Introduction
-The HuaweiAdsSdk_Demo program demonstrates how to integrate the HMS Core Ads SDK into an Android app and display ads.
+The HuaweiAdsSdk_Demo program demonstrates how to integrate the Petal Ads SDK into an Android app and display ads.
 
 ## Installation
 Install the program on Huawei Android mobile phones.
-<br>You also can use HMS Toolkit to quickly integrate the kit and run the demo project, as well as debug the app using a remote device for free. For details, please visit [HMS Toolkit](https://developer.huawei.com/consumer/en/doc/development/Tools-Guides/getting-started-0000001077381096)。</br>
+<br>You also can use HMS Toolkit to quickly integrate the kit and run the demo project, as well as debug the app using a remote device for free. 
+For details, please visit [HMS Toolkit](https://developer.huawei.com/consumer/en/doc/development/Tools-Guides/getting-started-0000001077381096)。</br>
     
 ## Supported Environments
 HMS Core (APK) 4.0.0 or later has been installed on Huawei Android phones.	
 	
 ## Sample Code
-The HuaweiAdsSdk_Demo program integrates the HMS Core Ads SDK and provides the pages for displaying banner, native, rewarded, interstitial, and splash ads, respectively.
+The HuaweiAdsSdk_Demo program integrates the Petal Ads SDK and provides the pages for displaying banner, native, rewarded, interstitial, and splash ads, respectively.
 The following classes in the demo are used for loading and displaying ads and collecting user comments:
 
 1. BannerActivity.kt
