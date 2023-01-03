@@ -38,7 +38,7 @@ class InterstitialActivity : BaseActivity() {
         title = getString(R.string.interstitial_ad)
         setContentView(R.layout.activity_interstitial)
 
-        // Initialize the HUAWEI Ads SDK.
+        // Initialize the Petal Ads SDK.
         HwAds.init(this)
         displayRadioGroup = findViewById(R.id.display_radio_group)
         loadAdButton = findViewById(R.id.load_ad)
